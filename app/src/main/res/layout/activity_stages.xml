@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_stages"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/stagesbackground"
+    android:layout_centerHorizontal="true"
+    tools:context="com.example.android.game.StagesActivity">
+
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/ic_arrow_back_white_24dp"
+        android:layout_alignParentLeft="true"
+        android:onClick="onBackClick"/>
+
+    <ImageButton
+        android:id="@+id/stageOne"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/stageone"
+        android:layout_alignParentLeft="true"
+        android:onClick="onStageOneClick" />
+
+
+    <ImageButton
+        android:id="@+id/stageTwo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="60dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/stagetwo"
+        android:onClick="onStageTwoClick" />
+
+
+    <ImageButton
+        android:id="@+id/stageThree"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="60dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/stagethree"
+        android:onClick="onStageThreeClick" />
+
+    <Button
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@mipmap/ic_exit"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:onClick="onExitClick"/>
+
+
+</RelativeLayout>
