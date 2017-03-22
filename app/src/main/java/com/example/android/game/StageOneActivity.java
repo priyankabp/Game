@@ -35,7 +35,7 @@ public class StageOneActivity extends AppCompatActivity {
     EndDraggingLsntr myEndDraggingLsntr;
     Button playButton;
     ImageView player;
-    MediaPlayer waves;
+    MediaPlayer wav1,wav2,wav3,wav4;
 
 
     @Override
@@ -91,33 +91,64 @@ public class StageOneActivity extends AppCompatActivity {
 
         if (requiredActionSequence.equals(actionSequence)) {
 
-            ObjectAnimator actionOneAnimation= ObjectAnimator.ofFloat(player, "translationX", 0f, 670f);
-            ObjectAnimator actionTwoAnimation= ObjectAnimator.ofFloat(player, "translationY", 0f, 480f);
-            ObjectAnimator actionThreeAnimation= ObjectAnimator.ofFloat(player, "translationX", 670f, 1340f);
+            ObjectAnimator actionOneAnimation = ObjectAnimator.ofFloat(player, "translationX", 0f, 670f);
+            ObjectAnimator actionTwoAnimation = ObjectAnimator.ofFloat(player, "translationY", 0f, 480f);
+            ObjectAnimator actionThreeAnimation = ObjectAnimator.ofFloat(player, "translationX", 670f, 1340f);
             AnimatorSet set = new AnimatorSet();
-            set.setDuration(5000);
+            set.setDuration(3000);
             set.playSequentially(actionOneAnimation, actionTwoAnimation, actionThreeAnimation);
             set.start();
 
             actionThreeAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
-                    float imageXPosition = (Float)animation.getAnimatedValue();
-                    String position = String.format("X:%d", (int)imageXPosition);
+                    float imageXPosition = (Float) animation.getAnimatedValue();
+                    String position = String.format("X:%d", (int) imageXPosition);
 
                     TextView positionTextView = (TextView) findViewById(R.id.positionTextView);
                     positionTextView.setText(position);
 
-                    if (imageXPosition >= 670){
-                        findViewById(R.id.coin1).setVisibility(View.INVISIBLE);
+                    if (imageXPosition >= 670) {
+                        wav1 = MediaPlayer.create(StageOneActivity.this, R.raw.coinpickup);
+                        wav1.start();
+                        findViewById(R.id.stageone_coin1).setVisibility(View.INVISIBLE);
                     }
-                    if((int) imageXPosition >= 870){
-                        findViewById(R.id.coin2).setVisibility(View.INVISIBLE);
+                    if ((int) imageXPosition >= 870) {
+                        wav2 = MediaPlayer.create(StageOneActivity.this, R.raw.coinpickup);
+                        wav2.start();
+                        findViewById(R.id.stageone_coin2).setVisibility(View.INVISIBLE);
                     }
-                    if((int) imageXPosition >= 1120){
-                        findViewById(R.id.coin3).setVisibility(View.INVISIBLE);
+                    if ((int) imageXPosition >= 1120) {
+                        wav3 = MediaPlayer.create(StageOneActivity.this, R.raw.coinpickup);
+                        wav3.start();
+                        findViewById(R.id.stageone_coin3).setVisibility(View.INVISIBLE);
+                    }
+                    if ((int) imageXPosition == 1340) {
+
+                        AlertDialog.Builder alertadd = new AlertDialog.Builder(StageOneActivity.this);
+                        LayoutInflater factory = LayoutInflater.from(StageOneActivity.this);
+                        final View youwin = factory.inflate(R.layout.activity_winning, null);
+                        alertadd.setView(youwin);
+                        alertadd.setNegativeButton("Next Level >>", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dlg, int something) {
+                                Intent intent = new Intent(StageOneActivity.this, StageTwoActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                        alertadd.setPositiveButton("Play Again!", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dlg, int something) {
+                                Intent intent = new Intent(StageOneActivity.this, StageOneActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                        AlertDialog alert = alertadd.create();
+                        alert.show();
+                        wav4 = MediaPlayer.create(StageOneActivity.this, R.raw.gameover);
+                        wav4.start();
+
                     }
                 }
+
             });
 
             /*final AnimationSet set = new AnimationSet(true);

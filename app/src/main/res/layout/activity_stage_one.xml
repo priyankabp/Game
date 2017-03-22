@@ -85,7 +85,7 @@
             android:background="@mipmap/ic_path"/>
 
         <ImageView
-            android:id="@+id/coin1"
+            android:id="@+id/stageone_coin1"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginLeft="255dp"
@@ -101,7 +101,7 @@
             android:background="@mipmap/ic_path"/>
 
         <ImageView
-            android:id="@+id/coin2"
+            android:id="@+id/stageone_coin2"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginLeft="335dp"
@@ -117,7 +117,7 @@
             android:background="@mipmap/ic_path"/>
 
         <ImageView
-            android:id="@+id/coin3"
+            android:id="@+id/stageone_coin3"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginLeft="415dp"

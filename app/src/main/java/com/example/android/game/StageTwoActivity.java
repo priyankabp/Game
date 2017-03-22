@@ -1,5 +1,8 @@
 package com.example.android.game;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,6 +21,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -32,12 +36,13 @@ public class StageTwoActivity extends AppCompatActivity {
     Button playButton;
     ImageView player;
     MediaPlayer waves;
+    AnimatorSet set;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stage_one);
+        setContentView(R.layout.activity_stage_two);
 
         myStartDraggingLsntr = new StartDraggingLsntr();
         myEndDraggingLsntr = new EndDraggingLsntr();
@@ -53,6 +58,8 @@ public class StageTwoActivity extends AppCompatActivity {
         findViewById(R.id.firstAction).setOnDragListener(myEndDraggingLsntr);
         findViewById(R.id.secondAction).setOnDragListener(myEndDraggingLsntr);
         findViewById(R.id.thirdAction).setOnDragListener(myEndDraggingLsntr);
+        findViewById(R.id.fourthAction).setOnDragListener(myEndDraggingLsntr);
+        findViewById(R.id.fifthAction).setOnDragListener(myEndDraggingLsntr);
 
         player.bringToFront();
 
@@ -68,11 +75,15 @@ public class StageTwoActivity extends AppCompatActivity {
         String moveOne = (String) findViewById(R.id.firstAction).getContentDescription();
         String moveTwo = (String) findViewById(R.id.secondAction).getContentDescription();
         String moveThree = (String) findViewById(R.id.thirdAction).getContentDescription();
+        String moveFour = (String) findViewById(R.id.fourthAction).getContentDescription();
+        String moveFive = (String) findViewById(R.id.fifthAction).getContentDescription();
 
         ArrayList<String> actionSequence = new ArrayList<String>();
         actionSequence.add(moveOne);
         actionSequence.add(moveTwo);
         actionSequence.add(moveThree);
+        actionSequence.add(moveFour);
+        actionSequence.add(moveFive);
         return actionSequence;
     }
 
@@ -84,10 +95,74 @@ public class StageTwoActivity extends AppCompatActivity {
         requiredActionSequence.add("right");
         requiredActionSequence.add("down");
         requiredActionSequence.add("right");
+        requiredActionSequence.add("down");
+        requiredActionSequence.add("right");
 
         if (requiredActionSequence.equals(actionSequence)) {
 
-            final AnimationSet set = new AnimationSet(true);
+            ObjectAnimator actionOneAnimation = ObjectAnimator.ofFloat(player, "translationX", 0f, 430f);
+            ObjectAnimator actionTwoAnimation = ObjectAnimator.ofFloat(player, "translationY", 0f, 240f);
+            ObjectAnimator actionThreeAnimation = ObjectAnimator.ofFloat(player, "translationX", 430f, 670f);
+            ObjectAnimator actionFourAnimation = ObjectAnimator.ofFloat(player, "translationY", 240f, 474f);
+            ObjectAnimator actionFiveAnimation = ObjectAnimator.ofFloat(player, "translationX", 670f, 1340f);
+            set = new AnimatorSet();
+            set.setDuration(3000);
+            set.playSequentially(actionOneAnimation,
+                                 actionTwoAnimation,
+                                 actionThreeAnimation,
+                                 actionFourAnimation,
+                                 actionFiveAnimation);
+            set.start();
+
+            actionFiveAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    float imageXPosition = (Float) animation.getAnimatedValue();
+                    String positionX = String.format("X:%d", (int) imageXPosition);
+
+                    TextView positionTextView = (TextView) findViewById(R.id.positionTextView);
+                    positionTextView.setText(positionX);
+                    if (imageXPosition >= 240) {
+                        findViewById(R.id.stagetwo_coin1).setVisibility(View.INVISIBLE);
+                    }
+                    if (imageXPosition >= 670) {
+                        findViewById(R.id.stagetwo_coin2).setVisibility(View.INVISIBLE);
+                    }
+                    if ((int) imageXPosition >= 870) {
+                        findViewById(R.id.stagetwo_coin3).setVisibility(View.INVISIBLE);
+                    }
+                    if ((int) imageXPosition >= 1120) {
+                        findViewById(R.id.stagetwo_coin4).setVisibility(View.INVISIBLE);
+                    }
+                    if ((int) imageXPosition == 1340) {
+
+                        AlertDialog.Builder alertadd = new AlertDialog.Builder(StageTwoActivity.this);
+                        LayoutInflater factory = LayoutInflater.from(StageTwoActivity.this);
+                        final View youwin = factory.inflate(R.layout.activity_winning, null);
+                        alertadd.setView(youwin);
+                        alertadd.setNegativeButton("Next Level >>", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dlg, int something) {
+                                Intent intent = new Intent(StageTwoActivity.this, StageThreeActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                        alertadd.setPositiveButton("Play Again!", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dlg, int something) {
+                                Intent intent = new Intent(StageTwoActivity.this, StageTwoActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                        AlertDialog alert = alertadd.create();
+                        alert.show();
+                        waves = MediaPlayer.create(StageTwoActivity.this, R.raw.gameover);
+                        waves.start();
+
+                    }
+                }
+
+            });
+
+            /*final AnimationSet set = new AnimationSet(true);
             TranslateAnimation actionOne = new TranslateAnimation(0, 670, 0, 0);
             actionOne.setDuration(3000);
             set.addAnimation(actionOne);
@@ -137,7 +212,7 @@ public class StageTwoActivity extends AppCompatActivity {
                 public void onAnimationRepeat(Animation animation) {
 
                 }
-            });
+            });*/
         } else {
             AlertDialog alertDialog = new AlertDialog.Builder(this).create();
             alertDialog.setMessage("Please select correct sequence!");
@@ -153,8 +228,9 @@ public class StageTwoActivity extends AppCompatActivity {
     }
 
     public void onStopClick(View view) {
-
-        player.clearAnimation();
+        //TODO: clear animation on same page
+       Intent intent = new Intent(this,StageTwoActivity.class);
+        startActivity(intent);
 
     }
 

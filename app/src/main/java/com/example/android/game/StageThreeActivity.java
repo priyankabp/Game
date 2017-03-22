@@ -1,5 +1,7 @@
 package com.example.android.game;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,12 +34,13 @@ public class StageThreeActivity extends AppCompatActivity {
     Button playButton;
     ImageView player;
     MediaPlayer waves;
+    AnimatorSet set;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stage_one);
+        setContentView(R.layout.activity_stage_three);
 
         myStartDraggingLsntr = new StartDraggingLsntr();
         myEndDraggingLsntr = new EndDraggingLsntr();
@@ -53,6 +56,9 @@ public class StageThreeActivity extends AppCompatActivity {
         findViewById(R.id.firstAction).setOnDragListener(myEndDraggingLsntr);
         findViewById(R.id.secondAction).setOnDragListener(myEndDraggingLsntr);
         findViewById(R.id.thirdAction).setOnDragListener(myEndDraggingLsntr);
+        findViewById(R.id.fourthAction).setOnDragListener(myEndDraggingLsntr);
+        findViewById(R.id.fifthAction).setOnDragListener(myEndDraggingLsntr);
+        findViewById(R.id.sixthAction).setOnDragListener(myEndDraggingLsntr);
 
         player.bringToFront();
 
@@ -68,11 +74,17 @@ public class StageThreeActivity extends AppCompatActivity {
         String moveOne = (String) findViewById(R.id.firstAction).getContentDescription();
         String moveTwo = (String) findViewById(R.id.secondAction).getContentDescription();
         String moveThree = (String) findViewById(R.id.thirdAction).getContentDescription();
+        String moveFour = (String) findViewById(R.id.fourthAction).getContentDescription();
+        String moveFive = (String) findViewById(R.id.fifthAction).getContentDescription();
+        String moveSix = (String) findViewById(R.id.sixthAction).getContentDescription();
 
         ArrayList<String> actionSequence = new ArrayList<String>();
         actionSequence.add(moveOne);
         actionSequence.add(moveTwo);
         actionSequence.add(moveThree);
+        actionSequence.add(moveFour);
+        actionSequence.add(moveFive);
+        actionSequence.add(moveSix);
         return actionSequence;
     }
 
@@ -81,13 +93,32 @@ public class StageThreeActivity extends AppCompatActivity {
         ArrayList<String> actionSequence = getActionSequence();
 
         ArrayList<String> requiredActionSequence = new ArrayList<String>();
+        requiredActionSequence.add("down");
+        requiredActionSequence.add("right");
+        requiredActionSequence.add("up");
         requiredActionSequence.add("right");
         requiredActionSequence.add("down");
         requiredActionSequence.add("right");
 
         if (requiredActionSequence.equals(actionSequence)) {
 
-            final AnimationSet set = new AnimationSet(true);
+            ObjectAnimator actionOneAnimation = ObjectAnimator.ofFloat(player, "translationY", 0f, 410f);
+            ObjectAnimator actionTwoAnimation = ObjectAnimator.ofFloat(player, "translationX", 0f, 394f);
+            ObjectAnimator actionThreeAnimation = ObjectAnimator.ofFloat(player, "translationY", 392f, 0f);
+            ObjectAnimator actionFourAnimation = ObjectAnimator.ofFloat(player, "translationX", 392f, 788f);
+            ObjectAnimator actionFiveAnimation = ObjectAnimator.ofFloat(player, "translationY", 0f, 402f);
+            ObjectAnimator actionSixAnimation = ObjectAnimator.ofFloat(player, "translationX", 788f, 1320f);
+            set = new AnimatorSet();
+            set.setDuration(3000);
+            set.playSequentially(actionOneAnimation,
+                    actionTwoAnimation,
+                    actionThreeAnimation,
+                    actionFourAnimation,
+                    actionFiveAnimation,
+                    actionSixAnimation);
+            set.start();
+
+            /*final AnimationSet set = new AnimationSet(true);
             TranslateAnimation actionOne = new TranslateAnimation(0, 670, 0, 0);
             actionOne.setDuration(3000);
             set.addAnimation(actionOne);
@@ -137,7 +168,7 @@ public class StageThreeActivity extends AppCompatActivity {
                 public void onAnimationRepeat(Animation animation) {
 
                 }
-            });
+            });*/
         } else {
             AlertDialog alertDialog = new AlertDialog.Builder(this).create();
             alertDialog.setMessage("Please select correct sequence!");

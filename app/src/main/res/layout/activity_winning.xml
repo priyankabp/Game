@@ -18,28 +18,4 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="135dp"
         android:text="TextView" />
-
-    <Button
-        android:id="@+id/nextlevel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button"
-        android:layout_alignBottom="@+id/button"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignStart="@+id/textView2"
-        android:layout_marginLeft="39dp"
-        android:layout_marginStart="39dp"
-        android:text="Next Level" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/textView2"
-        android:layout_alignRight="@+id/textView2"
-        android:layout_below="@+id/textView2"
-        android:layout_marginEnd="39dp"
-        android:layout_marginRight="39dp"
-        android:layout_marginTop="157dp"
-        android:text="PlayAgain" />
 </RelativeLayout>

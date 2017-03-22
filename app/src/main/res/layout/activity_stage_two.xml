@@ -25,6 +25,13 @@
             android:background="@drawable/ic_arrow_back_white_24dp"
             android:onClick="onBackClick" />
 
+        <TextView
+            android:id="@+id/positionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="60dp" />
+
         <ImageView
             android:id="@+id/player"
             android:layout_width="60dp"
@@ -40,9 +47,6 @@
             android:layout_marginLeft="80dp"
             android:layout_marginTop="80dp"
             android:background="@mipmap/ic_path"/>
-
-
-
         <ImageView
             android:id="@+id/pathtile2"
             android:layout_width="80dp"
@@ -50,23 +54,27 @@
             android:layout_marginTop="80dp"
             android:layout_toRightOf="@+id/pathtile1"
             android:background="@mipmap/ic_path"/>
-
         <ImageView
             android:id="@+id/pathtile3"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_marginTop="80dp"
-            android:layout_toRightOf="@+id/pathtile2"
+            android:layout_marginLeft="160dp"
+            android:layout_below="@+id/pathtile2"
             android:background="@mipmap/ic_path"/>
-
+        <ImageView
+            android:id="@+id/stagetwo_coin1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="175dp"
+            android:layout_marginTop="175dp"
+            android:background="@mipmap/ic_goldcoin"/>
         <ImageView
             android:id="@+id/pathtile4"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_marginLeft="240dp"
-            android:layout_below="@+id/pathtile3"
+            android:layout_marginTop="160dp"
+            android:layout_toRightOf="@+id/pathtile3"
             android:background="@mipmap/ic_path"/>
-
         <ImageView
             android:id="@+id/pathtile5"
             android:layout_width="80dp"
@@ -74,7 +82,13 @@
             android:layout_marginLeft="240dp"
             android:layout_below="@+id/pathtile4"
             android:background="@mipmap/ic_path"/>
-
+        <ImageView
+            android:id="@+id/stagetwo_coin2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="255dp"
+            android:layout_marginTop="255dp"
+            android:background="@mipmap/ic_goldcoin"/>
         <ImageView
             android:id="@+id/pathtile6"
             android:layout_width="80dp"
@@ -82,7 +96,13 @@
             android:layout_marginTop="239dp"
             android:layout_toRightOf="@+id/pathtile5"
             android:background="@mipmap/ic_path"/>
-
+        <ImageView
+            android:id="@+id/stagetwo_coin3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="335dp"
+            android:layout_marginTop="255dp"
+            android:background="@mipmap/ic_goldcoin"/>
         <ImageView
             android:id="@+id/pathtile7"
             android:layout_width="80dp"
@@ -90,6 +110,13 @@
             android:layout_marginTop="239dp"
             android:layout_toRightOf="@+id/pathtile6"
             android:background="@mipmap/ic_path"/>
+        <ImageView
+            android:id="@+id/stagetwo_coin4"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="415dp"
+            android:layout_marginTop="255dp"
+            android:background="@mipmap/ic_goldcoin"/>
 
         <Button
             android:id="@+id/firstAction"
@@ -123,10 +150,32 @@
             android:text=" " />
 
         <Button
+            android:id="@+id/fourthAction"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="3dp"
+            android:layout_toRightOf="@+id/thirdAction"
+            android:layout_weight="1"
+            android:background="@drawable/mybutton_backgroud"
+            android:text=" " />
+
+        <Button
+            android:id="@+id/fifthAction"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="3dp"
+            android:layout_toRightOf="@+id/fourthAction"
+            android:layout_weight="1"
+            android:background="@drawable/mybutton_backgroud"
+            android:text=" " />
+
+        <Button
             android:id="@+id/moveUp"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_toLeftOf="@+id/moveDown"
+            android:layout_marginRight="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/moveLeft"
             android:layout_weight="1"
             android:background="@drawable/ic_arrow_upward_black_24dp"
             android:contentDescription="up" />
@@ -135,7 +184,8 @@
             android:id="@+id/moveDown"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_toLeftOf="@+id/moveLeft"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/moveRight"
             android:layout_weight="1"
             android:background="@drawable/ic_arrow_downward_black_24dp"
             android:contentDescription="down" />
@@ -144,7 +194,9 @@
             android:id="@+id/moveLeft"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_toLeftOf="@+id/moveRight"
+            android:layout_marginRight="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/playButton"
             android:layout_weight="1"
             android:background="@drawable/ic_arrow_back_black_24dp"
             android:contentDescription="left" />
@@ -153,7 +205,8 @@
             android:id="@+id/moveRight"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_toLeftOf="@+id/playButton"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/pauseButton"
             android:layout_weight="1"
             android:background="@drawable/ic_arrow_forward_black_24dp"
             android:contentDescription="right"/>
@@ -180,7 +233,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@mipmap/ic_exit"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
             android:onClick="onExitClick"/>
 
