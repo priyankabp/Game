@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Game</string>
+    <string name="coinlabel">Coins : </string>
+    <string name="scorelabel">Score: </string>
+    <string name="blank"> </string>
+    <string name="moveup">up</string>
+    <string name="movedown">down</string>
+    <string name="moveleft">left</string>
+    <string name="moveright">right</string>
+    <string name="youwin">You Win!!</string>
 </resources>

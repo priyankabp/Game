@@ -52,7 +52,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:background="@mipmap/ic_exit"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:onClick="onExitClick"/>
 

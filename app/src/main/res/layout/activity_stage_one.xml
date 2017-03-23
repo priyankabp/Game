@@ -2,7 +2,6 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -28,11 +27,44 @@
             android:onClick="onBackClick" />
 
         <TextView
-            android:id="@+id/positionTextView"
+            android:id="@+id/coinsCollectedLbl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="60dp" />
+            android:layout_marginLeft="410dp"
+            android:layout_marginTop="80dp"
+            android:text="@string/coinlabel"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="17sp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/coinsCollected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="470dp"
+            android:layout_marginTop="80dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="17sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/scoreLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="410dp"
+            android:layout_marginTop="100dp"
+            android:text="@string/scorelabel"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="17sp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="470dp"
+            android:layout_marginTop="100dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="17sp"
+            android:textStyle="bold"/>
 
         <ImageView
             android:id="@+id/player"
@@ -41,6 +73,8 @@
             android:layout_marginLeft="26dp"
             android:layout_marginTop="90dp"
             android:background="@mipmap/ic_player"/>
+
+
 
         <ImageView
             android:id="@+id/pathtile1"
@@ -131,9 +165,8 @@
             android:layout_marginLeft="26dp"
             android:layout_marginRight="3dp"
             android:layout_toRightOf="@+id/backBtn"
-            android:layout_weight="1"
             android:background="@drawable/mybutton_backgroud"
-            android:text=" " />
+            android:text="@string/blank" />
 
         <Button
             android:id="@+id/secondAction"
@@ -141,9 +174,8 @@
             android:layout_height="50dp"
             android:layout_marginRight="3dp"
             android:layout_toRightOf="@+id/firstAction"
-            android:layout_weight="1"
             android:background="@drawable/mybutton_backgroud"
-            android:text=" " />
+            android:text="@string/blank" />
 
         <Button
             android:id="@+id/thirdAction"
@@ -151,52 +183,46 @@
             android:layout_height="50dp"
             android:layout_marginRight="3dp"
             android:layout_toRightOf="@+id/secondAction"
-            android:layout_weight="1"
             android:background="@drawable/mybutton_backgroud"
-            android:text=" " />
+            android:text="@string/blank" />
 
         <Button
             android:id="@+id/moveUp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_toLeftOf="@+id/moveDown"
-            android:layout_weight="1"
             android:background="@drawable/ic_arrow_upward_black_24dp"
-            android:contentDescription="up" />
+            android:contentDescription="@string/moveup" />
 
         <Button
             android:id="@+id/moveDown"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_toLeftOf="@+id/moveLeft"
-            android:layout_weight="1"
             android:background="@drawable/ic_arrow_downward_black_24dp"
-            android:contentDescription="down" />
+            android:contentDescription="@string/movedown" />
 
         <Button
             android:id="@+id/moveLeft"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_toLeftOf="@+id/moveRight"
-            android:layout_weight="1"
             android:background="@drawable/ic_arrow_back_black_24dp"
-            android:contentDescription="left" />
+            android:contentDescription="@string/moveleft" />
 
         <Button
             android:id="@+id/moveRight"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_toLeftOf="@+id/playButton"
-            android:layout_weight="1"
             android:background="@drawable/ic_arrow_forward_black_24dp"
-            android:contentDescription="right"/>
+            android:contentDescription="@string/moveright"/>
 
         <Button
             android:id="@+id/playButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_toLeftOf="@+id/pauseButton"
-            android:layout_weight="1"
             android:background="@mipmap/ic_play_circle_filled_black_24dp"
             android:onClick="onPlayClick" />
 
@@ -205,7 +231,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentRight="true"
-            android:layout_weight="1"
             android:background="@mipmap/ic_stop_black_24dp"
             android:onClick="onStopClick" />
 

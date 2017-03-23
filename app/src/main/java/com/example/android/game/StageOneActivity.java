@@ -1,3 +1,8 @@
+/*
+ * This is the level one of the game.
+ * the simplest level of the game.
+ **/
+
 package com.example.android.game;
 
 import android.animation.AnimatorSet;
@@ -15,18 +20,12 @@ import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-
-import static android.R.attr.animation;
-
 
 public class StageOneActivity extends AppCompatActivity {
 
@@ -35,7 +34,10 @@ public class StageOneActivity extends AppCompatActivity {
     EndDraggingLsntr myEndDraggingLsntr;
     Button playButton;
     ImageView player;
-    MediaPlayer wav1,wav2,wav3,wav4;
+    MediaPlayer waves;
+    TextView coinsCollected, totalScore;
+    int score;
+    int coins;
 
 
     @Override
@@ -43,9 +45,11 @@ public class StageOneActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stage_one);
 
+        //listeners for drag and drop
         myStartDraggingLsntr = new StartDraggingLsntr();
         myEndDraggingLsntr = new EndDraggingLsntr();
 
+        //buttons binding to the activity
         player = (ImageView) findViewById(R.id.player);
         playButton = (Button) findViewById(R.id.playButton);
         findViewById(R.id.playButton).setOnLongClickListener(myStartDraggingLsntr);
@@ -54,19 +58,39 @@ public class StageOneActivity extends AppCompatActivity {
         findViewById(R.id.moveLeft).setOnLongClickListener(myStartDraggingLsntr);
         findViewById(R.id.moveRight).setOnLongClickListener(myStartDraggingLsntr);
 
+        // selected moves
         findViewById(R.id.firstAction).setOnDragListener(myEndDraggingLsntr);
         findViewById(R.id.secondAction).setOnDragListener(myEndDraggingLsntr);
         findViewById(R.id.thirdAction).setOnDragListener(myEndDraggingLsntr);
 
         player.bringToFront();
 
+        score = 0;
+        coins = 0;
+        coinsCollected = (TextView) findViewById(R.id.coinsCollected);
+        totalScore = (TextView) findViewById(R.id.score);
+
+        //updating score as per the coins are collected
+        updateScore();
+
+        //initializing music for coin pickup
+        waves = MediaPlayer.create(StageOneActivity.this, R.raw.coinpickup);
     }
 
+    //updating score simultaneously coins are collected
+    public void updateScore(){
+        score = coins*1000;
+        coinsCollected.setText(Integer.toString(coins));
+        totalScore.setText(Integer.toString(score));
+    }
+
+    //navigates to previous activity
     public void onBackClick(View view) {
         Intent intent = new Intent(this, StagesActivity.class);
         startActivity(intent);
     }
 
+    //check the selected move by the player and return the list
     public ArrayList<String> getActionSequence() {
 
         String moveOne = (String) findViewById(R.id.firstAction).getContentDescription();
@@ -80,22 +104,29 @@ public class StageOneActivity extends AppCompatActivity {
         return actionSequence;
     }
 
+    // animates the player as per the selected moves
     public void onPlayClick(View view) {
 
         ArrayList<String> actionSequence = getActionSequence();
 
+        //required sequence defined in the list
         ArrayList<String> requiredActionSequence = new ArrayList<String>();
         requiredActionSequence.add("right");
         requiredActionSequence.add("down");
         requiredActionSequence.add("right");
 
+        // checks if the reqired and selected sequence is correct
         if (requiredActionSequence.equals(actionSequence)) {
 
+            //move1
             ObjectAnimator actionOneAnimation = ObjectAnimator.ofFloat(player, "translationX", 0f, 670f);
+            //move2
             ObjectAnimator actionTwoAnimation = ObjectAnimator.ofFloat(player, "translationY", 0f, 480f);
+            //move3
             ObjectAnimator actionThreeAnimation = ObjectAnimator.ofFloat(player, "translationX", 670f, 1340f);
             AnimatorSet set = new AnimatorSet();
             set.setDuration(3000);
+            //animating all moves simultaneously
             set.playSequentially(actionOneAnimation, actionTwoAnimation, actionThreeAnimation);
             set.start();
 
@@ -103,107 +134,63 @@ public class StageOneActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     float imageXPosition = (Float) animation.getAnimatedValue();
-                    String position = String.format("X:%d", (int) imageXPosition);
-
-                    TextView positionTextView = (TextView) findViewById(R.id.positionTextView);
-                    positionTextView.setText(position);
 
                     if (imageXPosition >= 670) {
-                        wav1 = MediaPlayer.create(StageOneActivity.this, R.raw.coinpickup);
-                        wav1.start();
+                        //coin music
+                        waves.start();
+                        //collecting coins
                         findViewById(R.id.stageone_coin1).setVisibility(View.INVISIBLE);
+                        //updating score
+                        coins = 1;
+                        updateScore();
                     }
                     if ((int) imageXPosition >= 870) {
-                        wav2 = MediaPlayer.create(StageOneActivity.this, R.raw.coinpickup);
-                        wav2.start();
+                        //coin music
+                        waves.start();
+                        //collecting coins
                         findViewById(R.id.stageone_coin2).setVisibility(View.INVISIBLE);
+                        //updating score
+                        coins = 2;
+                        updateScore();
                     }
                     if ((int) imageXPosition >= 1120) {
-                        wav3 = MediaPlayer.create(StageOneActivity.this, R.raw.coinpickup);
-                        wav3.start();
+                        //coin music
+                        waves.start();
+                        //collecting coins
                         findViewById(R.id.stageone_coin3).setVisibility(View.INVISIBLE);
+                        //updating score
+                        coins = 3;
+                        updateScore();
                     }
                     if ((int) imageXPosition == 1340) {
-
+                        // Dailouge for playing again the same level or next level
                         AlertDialog.Builder alertadd = new AlertDialog.Builder(StageOneActivity.this);
                         LayoutInflater factory = LayoutInflater.from(StageOneActivity.this);
                         final View youwin = factory.inflate(R.layout.activity_winning, null);
                         alertadd.setView(youwin);
-                        alertadd.setNegativeButton("Next Level >>", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dlg, int something) {
-                                Intent intent = new Intent(StageOneActivity.this, StageTwoActivity.class);
-                                startActivity(intent);
-                            }
-                        });
+                        alertadd.setMessage("Score: "+ score);
                         alertadd.setPositiveButton("Play Again!", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dlg, int something) {
                                 Intent intent = new Intent(StageOneActivity.this, StageOneActivity.class);
                                 startActivity(intent);
                             }
                         });
+                        alertadd.setNegativeButton("Next Level >>", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dlg, int something) {
+                                Intent intent = new Intent(StageOneActivity.this, StageTwoActivity.class);
+                                startActivity(intent);
+                            }
+                        });
                         AlertDialog alert = alertadd.create();
                         alert.show();
-                        wav4 = MediaPlayer.create(StageOneActivity.this, R.raw.gameover);
-                        wav4.start();
+                        waves = MediaPlayer.create(StageOneActivity.this, R.raw.gameover);
+                        waves.start();
 
                     }
                 }
 
             });
 
-            /*final AnimationSet set = new AnimationSet(true);
-            TranslateAnimation actionOne = new TranslateAnimation(0, 670, 0, 0);
-            actionOne.setDuration(3000);
-            set.addAnimation(actionOne);
-            Animation actionTwo = new TranslateAnimation(0, 0, 0, 480);
-            actionTwo.setDuration(3000);
-            actionTwo.setStartOffset(3000);
-            set.addAnimation(actionTwo);
-            final Animation actionThree = new TranslateAnimation(0, 670, 0, 0);
-            actionThree.setDuration(3000);
-            actionThree.setStartOffset(6000);
-            actionThree.setFillEnabled(true);
-            set.addAnimation(actionThree);
-            player.startAnimation(set);
-
-
-
-            actionThree.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-
-                    AlertDialog.Builder alertadd = new AlertDialog.Builder(StageOneActivity.this);
-                    LayoutInflater factory = LayoutInflater.from(StageOneActivity.this);
-                    final View youwin = factory.inflate(R.layout.activity_winning, null);
-                    alertadd.setView(youwin);
-                    alertadd.setNegativeButton("Next Level >>", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dlg, int something) {
-                            Intent intent = new Intent(StageOneActivity.this, StageTwoActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-                    alertadd.setPositiveButton("Play Again!", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dlg, int something) {
-                            Intent intent = new Intent(StageOneActivity.this, StageOneActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-                    AlertDialog alert = alertadd.create();
-                    alert.show();
-                    waves = MediaPlayer.create(StageOneActivity.this, R.raw.gameover);
-                    waves.start();
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });*/
         } else {
             AlertDialog alertDialog = new AlertDialog.Builder(this).create();
             alertDialog.setMessage("Please select correct sequence!");
@@ -218,12 +205,15 @@ public class StageOneActivity extends AppCompatActivity {
 
     }
 
+    // Restarts the same activity
     public void onStopClick(View view) {
 
-        player.clearAnimation();
+        Intent intent = new Intent(this,StageOneActivity.class);
+        startActivity(intent);
 
     }
 
+    //game exit
     public void onExitClick(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -231,6 +221,7 @@ public class StageOneActivity extends AppCompatActivity {
         System.exit(0);
     }
 
+    //start dragging lisntr
     private class StartDraggingLsntr implements View.OnLongClickListener {
         @Override
         public boolean onLongClick(View v) {
@@ -241,6 +232,7 @@ public class StageOneActivity extends AppCompatActivity {
         }
     }
 
+    //end dragging lisntr
     private class EndDraggingLsntr implements View.OnDragListener {
         @Override
         public boolean onDrag(View v, DragEvent event) {
