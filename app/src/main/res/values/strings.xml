@@ -10,4 +10,9 @@
     <string name="youwin">You Win!!</string>
     <string name="play">Play</string>
     <string name="register">Register</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_log_in">Log In!</string>
+    <string name="action_log_in_short">Password</string>
+
 </resources>
