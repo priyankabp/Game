@@ -5,4 +5,11 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorYellow">#FF4</color>
     <color name="black">#000000</color>
+
+    <color name="colorOrange">#FFC133</color>
+    <color name="colorGreen">#1EC603</color>1EC603
+    <color name="colorPrimaryRedDark">#C0403C</color>
+    <color name="colorPrimaryRed">#F0514B</color>
+    <color name="colorPurple">#AA88DB</color>
+    <color name="colorBlack">#000000</color>
 </resources>

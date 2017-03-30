@@ -8,4 +8,6 @@
     <string name="moveleft">left</string>
     <string name="moveright">right</string>
     <string name="youwin">You Win!!</string>
+    <string name="play">Play</string>
+    <string name="register">Register</string>
 </resources>
